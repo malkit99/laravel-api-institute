@@ -34,6 +34,14 @@ Route::group(['middleware' => 'auth:airlock'] , function(){
         Route::post('/upload/{upload}/image-update','Api\User\UploadController@uploadImage');
         Route::apiResource('/category' , 'Api\Category\CourseCategoryController');
         Route::get('/category/category/{courseCategory}' , 'Api\Category\CourseCategoryController@categoryById');
+        Route::apiResource('/batch' , 'Api\Course\BatchController');
+        Route::apiResource('/content' , 'Api\Course\ContentController');
+        Route::apiResource('/course-code' ,'Api\Course\CourseCodeController');
+        Route::apiResource('/course-fee' ,'Api\Course\CourseFeeController');
+        Route::apiResource('/duration' , 'Api\Course\DurationController');
+        Route::apiResource('/course' , 'Api\Course\CourseController');
+        Route::get('/course/{course:slug}' , 'Api\Course\CourseController@showBySlug');
+        Route::apiResource('/subject' , 'Api\Course\SubjectController');
 });
 
 
