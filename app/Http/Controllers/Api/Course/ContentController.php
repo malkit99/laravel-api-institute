@@ -94,23 +94,24 @@ class ContentController extends Controller
      */
     public function update(Request $request, Subject $subject , Content $content)
     {
-        // $subject->subject_name = $request->subject_name;
-        // $subject->slug = Str::slug($request->subject_name , "-");
-        // if(!empty($request->get('contents'))){
-        //     $subject->update();
-        //     $id = $subject->id;
-        //     $contents =$request->get('contents');
-        //         for ($i=0; $i < count($contents) ; $i++) {
-        //             $content->subject_id = $id;
-        //             $content->content_id = $i+1;
-        //             $content->topic_name = $contents[$i]['topic_name'];
-        //             $content->topic_description =$contents[$i]['topic_description'];
-        //             $content->update();
-        //         }
-        //     }
-        // return response([ 'data' => new SubjectResource($subject) , 'message' => 'content created'], Response::HTTP_CREATED);
+        $subject = Subject::findOrFail($request->id);
+        $subject->subject_name = $request->subject_name;
+        $subject->slug = Str::slug($request->subject_name , "-");
+        if(!empty($request->get('contents'))){
+            $subject->update();
+            $id = $subject->id;
+            $contents =$request->get('contents');
+                for ($i=0; $i < count($contents) ; $i++) {
+                    $content->subject_id = $id;
+                    $content->content_id = $i+1;
+                    $content->topic_name = $contents[$i]['topic_name'];
+                    $content->topic_description =$contents[$i]['topic_description'];
+                    $content->update();
+                }
+            }
+        return response([ 'data' => new SubjectResource($subject) , 'message' => 'content created'], Response::HTTP_CREATED);
 
-        return response(['data' => $request->all()]);
+        // return response(['data' => $request->all()]);
     }
 
     /**

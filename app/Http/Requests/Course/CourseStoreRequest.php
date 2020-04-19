@@ -34,7 +34,7 @@ class CourseStoreRequest extends FormRequest
             "duration_id"           => "required",
             "course_image"          => "required|image",
             "skill_level"           => "required",
-            "contents"              => "required",
+            "subject*"              => "required",
         ];
     }
 

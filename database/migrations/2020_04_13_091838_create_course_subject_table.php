@@ -14,8 +14,10 @@ class CreateCourseSubjectTable extends Migration
     public function up()
     {
         Schema::create('course_subject', function (Blueprint $table) {
-            $table->integer('course_id');
-            $table->integer('subject_id');
+            $table->id();
+            $table->bigInteger('course_id');
+            $table->bigInteger('subject_id');
+            // $table->timestamps();
         });
     }
 

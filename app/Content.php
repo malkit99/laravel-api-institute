@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Content extends Model
 {
     protected $fillable = [
-        'content_name', 'topic_name', 'topic_description','mobile'
+        'topic_name', 'topic_description'
     ];
 
     public function subject()

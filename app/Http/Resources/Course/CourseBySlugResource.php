@@ -16,6 +16,8 @@ class CourseBySlugResource extends JsonResource
     public function toArray($request)
     {
           // return parent::toArray($request);
+
+
           return [
             'id' => $this->id,
             'title' => $this->title,
@@ -30,7 +32,9 @@ class CourseBySlugResource extends JsonResource
             'duration' => $this->duration()->pluck('duration')->first(),
             'fee' => $this->course_fee()->pluck('course_fee')->first(),
             'code' => $this->course_code()->pluck('course_code')->first(),
+            'subjects' => SubjectResource::collection($this->subjects()->get()),
 
         ];
+
     }
 }

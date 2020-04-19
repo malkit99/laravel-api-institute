@@ -31,10 +31,14 @@ class Course extends Model
         return $this->belongsTo(CourseFee::class);
     }
 
+
+
     public function subjects()
     {
-        return $this->belongsToMany(Content::class, 'course_subject', 'course_id', 'subject_id');
+        return $this->belongsToMany('App\Subject');
     }
+
+
 
 
 }

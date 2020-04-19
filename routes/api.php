@@ -41,7 +41,14 @@ Route::group(['middleware' => 'auth:airlock'] , function(){
         Route::apiResource('/duration' , 'Api\Course\DurationController');
         Route::apiResource('/course' , 'Api\Course\CourseController');
         Route::get('/course/{course:slug}' , 'Api\Course\CourseController@showBySlug');
+        Route::get('/course/{course}' , 'Api\Course\CourseController@showById');
+        Route::post('/course/{course}' , 'Api\Course\CourseController@updateById');
         Route::apiResource('/subject' , 'Api\Course\SubjectController');
+        Route::apiResource('/team' , 'Api\Team\TeamController');
+        Route::post('/team/{team}' , 'Api\Team\TeamController@updateById');
+        Route::apiResource('/event' , 'Api\Event\EventController');
+        Route::apiResource('/testimonial' , 'Api\Testimonial\TestimonialController');
+
 });
 
 
