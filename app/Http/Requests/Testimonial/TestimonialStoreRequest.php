@@ -25,7 +25,7 @@ class TestimonialStoreRequest extends FormRequest
     {
         return [
             'student' => 'required|string|min:3|max:30',
-            'description'=>'required|string|min:30',
+            'description'=>'required|string|min:30|max:200',
             'testi_image' => 'required|image'
         ];
     }

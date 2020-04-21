@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Event;
 use App\Event;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Event\EventStoreRequest;
+use App\Http\Resources\Event\EventByIdResource;
 use App\Http\Resources\Event\EventResource;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Auth;
@@ -43,15 +44,32 @@ class EventController extends Controller
 
     public function show(Event $event)
     {
-        return response(['data' => new EventResource($event)], Response::HTTP_CREATED);
+        return response(['data' => new EventByIdResource($event)], Response::HTTP_CREATED);
     }
 
 
 
 
-    public function update(Request $request, Event $event)
+    public function updateById(EventStoreRequest $request, Event $event)
     {
-        //
+        if(!$request->has('event_image')){
+            @unlink(public_path('/storage/event/'.$event->event_image));
+        }
+        else{
+            $file = $request->file('event_image');
+            $extension = $file->getClientOriginalExtension();
+            $event_image ='event_image_'.rand(1,1000).'_'.date('Ymdhis').'.'.$extension;
+            Image::make($file)->resize(600,600)->save(public_path('/storage/event/'.$event_image));
+            $event_image = $event_image;
+        }
+        $event->title = $request->title;
+        $event->description = $request->description;
+        $event->loction = $request->loction;
+        $event->start_date = $request->start_date;
+        $event->last_date = $request->last_date;
+        $event->event_image = $event_image;
+        $event->update();
+        return response(['data' => new EventResource($event)], Response::HTTP_CREATED);
     }
 
     public function destroy(Event $event)
@@ -61,5 +79,18 @@ class EventController extends Controller
         }
         $event->delete();
         return response(['data' => 'testimonial deleted']);
+    }
+
+
+    public function status(Request $request ,Event $event)
+    {
+        if($request->status === true){
+            $event->status = 1 ;
+        }
+        else{
+            $event->status = 0 ;
+        }
+        $event->update();
+        return response(['data' => new EventResource($event)], Response::HTTP_CREATED);
     }
 }

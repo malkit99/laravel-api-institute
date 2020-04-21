@@ -24,10 +24,10 @@ class EventStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|min:20|max:100',
+            'title' => 'required|string|min:10|max:100',
             'start_date' => 'required|date|date_format:Y-m-d|before_or_equal:last_date|after:yesterday',
             'last_date' => 'required|date|date_format:Y-m-d|after_or_equal:start_date',
-            'description' => 'required|string|min:10|max:200',
+            'description' => 'required|string|min:10|max:300',
             'event_image' => 'required|image',
         ];
     }

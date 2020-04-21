@@ -47,7 +47,11 @@ Route::group(['middleware' => 'auth:airlock'] , function(){
         Route::apiResource('/team' , 'Api\Team\TeamController');
         Route::post('/team/{team}' , 'Api\Team\TeamController@updateById');
         Route::apiResource('/event' , 'Api\Event\EventController');
+        Route::post('/event/{event}' , 'Api\Event\EventController@updateById');
+        Route::post('/event/status/{event}' , 'Api\Event\EventController@status');
         Route::apiResource('/testimonial' , 'Api\Testimonial\TestimonialController');
+        Route::post('/testimonial/status/{testimonial}' , 'Api\Testimonial\TestimonialController@status');
+        Route::post('/testimonial/update/{testimonial}' , 'Api\Testimonial\TestimonialController@updateById');
 
 });
 
