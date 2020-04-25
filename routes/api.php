@@ -40,7 +40,7 @@ Route::group(['middleware' => 'auth:airlock'] , function(){
         Route::apiResource('/course-fee' ,'Api\Course\CourseFeeController');
         Route::apiResource('/duration' , 'Api\Course\DurationController');
         Route::apiResource('/course' , 'Api\Course\CourseController');
-        Route::get('/course/{course:slug}' , 'Api\Course\CourseController@showBySlug');
+        Route::get('/course/course-slug/{course:slug}' , 'Api\Course\CourseController@showBySlug');
         Route::get('/course/{course}' , 'Api\Course\CourseController@showById');
         Route::post('/course/{course}' , 'Api\Course\CourseController@updateById');
         Route::apiResource('/subject' , 'Api\Course\SubjectController');
@@ -52,6 +52,8 @@ Route::group(['middleware' => 'auth:airlock'] , function(){
         Route::apiResource('/testimonial' , 'Api\Testimonial\TestimonialController');
         Route::post('/testimonial/status/{testimonial}' , 'Api\Testimonial\TestimonialController@status');
         Route::post('/testimonial/update/{testimonial}' , 'Api\Testimonial\TestimonialController@updateById');
+        Route::apiResource('/authorization' , 'Api\Authorization\AuthorizationController');
+        Route::apiResource('/jobOpportunity' , 'Api\JobOpportunity\JobOpportunityController');
 
 });
 
