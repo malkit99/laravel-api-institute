@@ -53,8 +53,14 @@ Route::group(['middleware' => 'auth:airlock'] , function(){
         Route::post('/testimonial/status/{testimonial}' , 'Api\Testimonial\TestimonialController@status');
         Route::post('/testimonial/update/{testimonial}' , 'Api\Testimonial\TestimonialController@updateById');
         Route::apiResource('/authorization' , 'Api\Authorization\AuthorizationController');
+        Route::post('/authorization/update/{authorization}' , 'Api\Authorization\AuthorizationController@updateById');
+        Route::post('/authorization/status/{authorization}' , 'Api\Authorization\AuthorizationController@status');
         Route::apiResource('/jobOpportunity' , 'Api\JobOpportunity\JobOpportunityController');
-
+        Route::post('/jobOpportunity/update/{jobOpportunity}' , 'Api\JobOpportunity\JobOpportunityController@updateById');
+        Route::post('/jobOpportunity/status/{jobOpportunity}' , 'Api\JobOpportunity\JobOpportunityController@status');
+        Route::apiResource('/contact' , 'Api\Contact\ContactController');
+        Route::apiResource('/callBack' , 'Api\CallBack\CallBackController');
+        Route::apiResource('/service' , 'Api\Service\ServiceController');
 });
 
 
@@ -62,4 +68,5 @@ Route::post('/forgot-password' , 'Api\Auth\ForgotPasswordController@sendResetLin
 Route::post('/reset-password' , 'Api\Auth\ResetPasswordController@reset')->name('api.password.reset');
 Route::apiResource('/login','Api\Auth\LoginController');
 Route::post('/airlock/token' , 'GenarateToken@token');
+Route::post('/contact-us' , 'Api\Front\Contact\ContactUsController@store');
 

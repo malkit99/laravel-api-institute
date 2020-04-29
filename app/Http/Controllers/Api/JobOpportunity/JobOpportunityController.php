@@ -47,9 +47,23 @@ class JobOpportunityController extends Controller
 
 
 
-    public function update(Request $request, JobOpportunity $jobOpportunity)
+    public function updateById(JobOpportunityStoreRequest $request, JobOpportunity $jobOpportunity)
     {
-        //
+        if(!$request->has('job_image')){
+
+        }
+        else{
+            $file = $request->file('job_image');
+            $extension = $file->getClientOriginalExtension();
+            $job_image ='job_image_'.rand(1,1000).'_'.date('Ymdhis').'.'.$extension;
+            Image::make($file)->resize(600,600)->save(public_path('/storage/job/'.$job_image));
+            $job_image = $job_image;
+        }
+
+        $jobOpportunity->company_name = $request->company_name;
+        $jobOpportunity->job_image = $job_image;
+        $jobOpportunity->update();
+        return response(['data' => new JobOpportunityResource($jobOpportunity)], Response::HTTP_CREATED);
     }
 
 
@@ -61,5 +75,17 @@ class JobOpportunityController extends Controller
         $jobOpportunity->delete();
         return response(['data' => 'Job Opportunity deleted'], Response::HTTP_ACCEPTED);
 
+    }
+
+    public function status(Request $request ,JobOpportunity $jobOpportunity)
+    {
+        if($request->status === true){
+            $jobOpportunity->status = 1 ;
+        }
+        else{
+            $jobOpportunity->status = 0 ;
+        }
+        $jobOpportunity->update();
+        return response(['data' => new JobOpportunityResource($jobOpportunity)], Response::HTTP_CREATED);
     }
 }

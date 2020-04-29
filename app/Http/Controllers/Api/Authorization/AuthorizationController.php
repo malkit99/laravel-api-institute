@@ -50,9 +50,25 @@ class AuthorizationController extends Controller
 
 
 
-    public function update(Request $request, Authorization $authorization)
+    public function updateById(Request $request, Authorization $authorization)
     {
-        //
+        if(!$request->has('auth_image')){
+
+        }
+        else {
+            $file = $request->file('auth_image');
+            $extension = $file->getClientOriginalExtension();
+            $auth_image ='auth_image_'.rand(1,1000).'_'.date('Ymdhis').'.'.$extension;
+            Image::make($file)->resize(600,600)->save(public_path('/storage/authorization/'.$auth_image));
+            $auth_image = $auth_image;
+        }
+
+        $authorization->authorization_name = $request->authorization_name;
+        $authorization->auth_type = $request->auth_type;
+        $authorization->auth_image = $auth_image;
+        $authorization->update();
+        return response(['data' => new AuthorizationResource($authorization)], Response::HTTP_CREATED);
+
     }
 
 
@@ -61,5 +77,17 @@ class AuthorizationController extends Controller
         @unlink(public_path('/storage/authorization/'.$authorization->auth_image));
         $authorization->delete();
         return response(['data' => 'Job Opportunity deleted'], Response::HTTP_ACCEPTED);
+    }
+
+    public function status(Request $request ,Authorization $authorization)
+    {
+        if($request->status === true){
+            $authorization->status = 1 ;
+        }
+        else{
+            $authorization->status = 0 ;
+        }
+        $authorization->update();
+        return response(['data' => new AuthorizationResource($authorization)], Response::HTTP_CREATED);
     }
 }
