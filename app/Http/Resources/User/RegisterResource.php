@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\User;
 
+use App\Http\Resources\RoleResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,12 +23,12 @@ class RegisterResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'mobile' => $this->mobile,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->format('d-M-Y'),
             'profile_image' => url('http://localhost:8000/storage/profile/'.$this->profile_image),
         ];
 
         $additionalData = [
-          'role'=> $this->roles->first(),
+          'role'=> new RoleResource($this->roles->first()),
         ];
 
         return array_merge($defaultData, $additionalData);

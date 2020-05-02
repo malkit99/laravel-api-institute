@@ -26,6 +26,7 @@ class CreateCoursesTable extends Migration
             $table->integer('course_fee_id')->nullable();
             $table->text('course_image')->nullable();
             $table->integer('status')->default(1);
+            $table->integer('popular_course')->default(0);
             $table->integer('certificate')->default(1);
             $table->integer('pratical_training')->default(1);
             $table->integer('certified_instructor')->default(1);

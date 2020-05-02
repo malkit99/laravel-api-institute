@@ -11,7 +11,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
-
+use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends Controller
 {
@@ -23,81 +23,58 @@ class RegisterController extends Controller
     public function index(User $user)
     {
         $user = User::with('roles')->get();
-        return RegisterResource::collection($user);
+        return response(['data' => RegisterResource::collection($user)], Response::HTTP_CREATED);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(UserStoreRequest $request , User $register)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(UserStoreRequest $request)
-    {
-
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->mobile = $request->mobile;
-        $user->password = Hash::make("password");
-        $user->save();
-        $roles = $request->input('roles') ? $request->input('roles') : [];
-        $user->assignRole($roles);
-        return new UserResource($user);
-
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $register)
-    {
-        return new UserResource($register);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UserUpdateRequest $request, User $register )
-    {
-
+        if($request->has('profile_image'))
+        {
+            $file = $request->file('profile_image');
+            $extension = $file->getClientOriginalExtension();
+            $profile_image ='profile_image_'.rand(1,1000).'_'.date('Ymdhis').'.'.$extension;
+            Image::make($file)->resize(600,600)->save(public_path('/storage/profile/'.$profile_image));
+            $profile_image = $profile_image;
+        }
         $register->name = $request->name;
         $register->email = $request->email;
         $register->mobile = $request->mobile;
-        $register->update();
-        if ($request->has('role')){
-            $register->syncRoles($request->role['id']);
-        }
+        $register->profile_image = $profile_image;
+        $register->password = Hash::make("password");
+        $register->save();
+        $roles = $request->input('roles') ? $request->input('roles') : [];
+        $register->assignRole($roles);
+        return response(['data' => new UserResource($register)] , Response::HTTP_CREATED);
+    }
 
-        return response()->json(['data' => $register , 'message' => 'user updated'], 201 );
+
+    public function show(User $register)
+    {
+        return response(['data' => new UserResource($register)] , Response::HTTP_CREATED);
+    }
+
+
+    public function updateById(UserUpdateRequest $request, User $register )
+    {
+        if(!$request->has('profile_image')){
+
+        }
+        else{
+            @unlink(public_path('/storage/profile/'.$register->profile_image));
+            $file = $request->file('profile_image');
+            $extension = $file->getClientOriginalExtension();
+            $profile_image ='profile_image_'.rand(1,1000).'_'.date('Ymdhis').'.'.$extension;
+            Image::make($file)->resize(600,600)->save(public_path('/storage/profile/'.$profile_image));
+            $profile_image = $profile_image;
+        }
+        $register->name = $request->name;
+        $register->mobile = $request->mobile;
+        $register->profile_image = $profile_image;
+        $register->update();
+        $roles = $request->input('roles') ? $request->input('roles') : [];
+        $register->syncRoles($roles);
+
+        return response(['data' => new UserResource($register)] , Response::HTTP_CREATED);
     }
 
     /**
@@ -109,7 +86,7 @@ class RegisterController extends Controller
     public function destroy(User $register)
     {
         if($register->profile_image){
-            @unlink(public_path('/profile/'.$register->profile_image));
+            @unlink(public_path('/storage/profile/'.$register->profile_image));
         }
         $register->delete();
 

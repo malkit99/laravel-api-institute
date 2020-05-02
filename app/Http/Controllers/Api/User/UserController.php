@@ -11,11 +11,11 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:airlock');
+        $this->middleware('auth:sanctum');
     }
 
     public function user(Request $request){
-        $user =$request->user();
+        $user = $request->user();
         return new UserUserResource($user);
     }
 }

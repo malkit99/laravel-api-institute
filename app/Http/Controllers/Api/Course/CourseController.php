@@ -113,4 +113,28 @@ class CourseController extends Controller
         $course->subjects()->detach($course->subject_id);
         return response(['data' => 'course Deleted']);
     }
+
+    public function status(Request $request ,Course $course)
+    {
+        if($request->status === true){
+            $course->status = 1 ;
+        }
+        else{
+            $course->status = 0 ;
+        }
+        $course->update();
+        return response(['data' => new CourseResource($course)], Response::HTTP_CREATED);
+    }
+
+    public function popular(Request $request ,Course $course)
+    {
+        if($request->popular_course === true){
+            $course->popular_course = 1 ;
+        }
+        else{
+            $course->popular_course = 0 ;
+        }
+        $course->update();
+        return response(['data' => new CourseResource($course)], Response::HTTP_CREATED);
+    }
 }

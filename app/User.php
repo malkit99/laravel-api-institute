@@ -6,7 +6,7 @@ use App\Notifications\ResetPasswordNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Airlock\HasApiTokens;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -22,7 +22,7 @@ class User extends Authenticatable
         'name', 'email', 'password','mobile','profile_image'
     ];
 
-    protected $guard_name = 'airlock';
+    protected $guard_name = 'sanctum';
 
     /**
      * The attributes that should be hidden for arrays.

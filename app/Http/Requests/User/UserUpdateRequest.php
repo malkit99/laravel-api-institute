@@ -31,7 +31,7 @@ class UserUpdateRequest extends FormRequest
             'email'=> 'required|email',
             'email' => 'unique:users,email,'.$user->id,
             'mobile'=> 'required|min:10|numeric',
-            'role'=> 'required',
+            'roles'=> 'required',
         ];
     }
 }

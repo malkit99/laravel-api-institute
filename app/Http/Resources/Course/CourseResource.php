@@ -21,6 +21,7 @@ class CourseResource extends JsonResource
             'course_name' => $this->course_name,
             'slug' => $this->slug,
             'status' => $this->status,
+            'popular_course' => $this->popular_course,
             'create' => $this->created_at->format('d-M-Y'),
             'course_image' => url('http://localhost:8000/storage/course/'.$this->course_image),
             'category' => new CategoryResource($this->course_category()->first()),
