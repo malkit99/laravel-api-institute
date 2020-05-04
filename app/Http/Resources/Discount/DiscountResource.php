@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Service;
+namespace App\Http\Resources\Discount;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ServiceResource extends JsonResource
+class DiscountResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,11 +18,11 @@ class ServiceResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'service_name' => $this->service_name,
-            'status' => $this->status,
+            'discount_title' => $this->discount_title,
+            'discount' => $this->discount,
             'description' => $this->description,
-            'created_at' => $this->created_at->format('d-M-Y'),
-            'service_image' => url(env('APP_URL').'/storage/service/'.$this->service_image),
+            'status' => $this->status,
+            'discount_image' => url(env('APP_URL').'/storage/discount/'.$this->discount_image),
         ];
     }
 }

@@ -47,6 +47,11 @@ Route::group(['middleware' => 'auth:sanctum'] , function(){
         Route::apiResource('/contact' , 'Api\Contact\ContactController');
         Route::apiResource('/callBack' , 'Api\CallBack\CallBackController');
         Route::apiResource('/service' , 'Api\Service\ServiceController');
+        Route::post('/service/update/{service}' , 'Api\Service\ServiceController@updateById');
+        Route::post('/service/status/{service}' , 'Api\Service\ServiceController@status');
+        Route::apiResource('/website' , 'Api\Website\WebsiteController');
+        Route::apiResource('/discount' , 'Api\Discount\DiscountController');
+        Route::apiResource('/slider' , 'Api\Slider\SliderController');
 });
 
 
