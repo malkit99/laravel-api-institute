@@ -52,6 +52,11 @@ Route::group(['middleware' => 'auth:sanctum'] , function(){
         Route::apiResource('/website' , 'Api\Website\WebsiteController');
         Route::apiResource('/discount' , 'Api\Discount\DiscountController');
         Route::apiResource('/slider' , 'Api\Slider\SliderController');
+        Route::apiResource('/country' , 'Api\Country\CountryController');
+        Route::apiResource('/state' , 'Api\Country\StateController');
+        Route::apiResource('/city' , 'Api\Country\CityController');
+        Route::get('/city/city/{id}' , 'Api\Country\CityController@getCityById');
+        Route::get('/state/state/{id}' , 'Api\Country\StateController@getStateById');
 });
 
 
