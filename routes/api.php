@@ -57,6 +57,9 @@ Route::group(['middleware' => 'auth:sanctum'] , function(){
         Route::apiResource('/city' , 'Api\Country\CityController');
         Route::get('/city/city/{id}' , 'Api\Country\CityController@getCityById');
         Route::get('/state/state/{id}' , 'Api\Country\StateController@getStateById');
+        Route::post('/import-excel' , 'Api\Country\ImportCountryController@importCountry');
+        Route::post('/state-excel' , 'Api\Country\ImportStateController@importState');
+        Route::post('/city-excel' , 'Api\Country\ImportCityController@importCity');
 });
 
 
