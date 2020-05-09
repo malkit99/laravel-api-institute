@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Course;
 use App\Course;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Course\CourseStoreRequest;
+use App\Http\Resources\Course\CourseAllNameResource;
 use App\Http\Resources\Course\CourseByIdResource;
 use App\Http\Resources\Course\CourseBySlugResource;
 use App\Http\Resources\Course\CourseResource;
@@ -23,6 +24,11 @@ class CourseController extends Controller
         return response(['data' => CourseResource::collection($course)], Response::HTTP_CREATED);
     }
 
+    public function courseName(Course $course)
+    {
+        $course = $course->all();
+        return response(['data' => CourseAllNameResource::collection($course)], Response::HTTP_CREATED);
+    }
 
 
     public function store(CourseStoreRequest $request)

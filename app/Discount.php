@@ -14,4 +14,9 @@ class Discount extends Model
     {
         $this->attributes['last_date'] = Carbon::createFromFormat('Y-m-d', $date);
     }
+
+    public function course()
+    {
+        return $this->belongsTo('App\Course');
+    }
 }

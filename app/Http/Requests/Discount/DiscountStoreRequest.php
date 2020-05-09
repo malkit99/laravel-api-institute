@@ -24,8 +24,9 @@ class DiscountStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'discount_title' => 'required|min:5|max:30|string',
+            'discount_title' => 'required|min:5|max:100|string',
             'discount' => 'required|digits_between:1,2',
+            'course_id' => 'required',
             'description' => 'required|min:10|max:200|string',
             'last_date' => 'required|date|date_format:Y-m-d|after_or_equal:today',
             'discount_image' => 'required|image',

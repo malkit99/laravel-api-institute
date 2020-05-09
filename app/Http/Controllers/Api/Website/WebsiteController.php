@@ -43,6 +43,7 @@ class WebsiteController extends Controller
         $website->linkedin = $request->linkedin;
         $website->address_line_1 = $request->address_line_1;
         $website->address_line_2 = $request->address_line_2;
+        $website->country = $request->country;
         $website->state = $request->state;
         $website->city = $request->city;
         $website->district = $request->district;

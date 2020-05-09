@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth:sanctum'] , function(){
         Route::post('/course/popular/{course}' , 'Api\Course\CourseController@popular');
         Route::get('/course/course-slug/{course:slug}' , 'Api\Course\CourseController@showBySlug');
         Route::get('/course/{course}' , 'Api\Course\CourseController@showById');
+        Route::get('/course/all-course-name/course' , 'Api\Course\CourseController@courseName');
         Route::post('/course/{course}' , 'Api\Course\CourseController@updateById');
         Route::apiResource('/subject' , 'Api\Course\SubjectController');
         Route::apiResource('/team' , 'Api\Team\TeamController');
@@ -51,7 +52,11 @@ Route::group(['middleware' => 'auth:sanctum'] , function(){
         Route::post('/service/status/{service}' , 'Api\Service\ServiceController@status');
         Route::apiResource('/website' , 'Api\Website\WebsiteController');
         Route::apiResource('/discount' , 'Api\Discount\DiscountController');
+        Route::post('/discount/update/{discount}' , 'Api\Discount\DiscountController@updateById');
+        Route::post('/discount/status/{discount}' , 'Api\Discount\DiscountController@status');
         Route::apiResource('/slider' , 'Api\Slider\SliderController');
+        Route::post('/slider/update/{slider}' , 'Api\Slider\SliderController@updateById');
+        Route::post('/slider/status/{slider}' , 'Api\Slider\SliderController@status');
         Route::apiResource('/country' , 'Api\Country\CountryController');
         Route::apiResource('/state' , 'Api\Country\StateController');
         Route::apiResource('/city' , 'Api\Country\CityController');

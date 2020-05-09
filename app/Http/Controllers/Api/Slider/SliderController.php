@@ -44,9 +44,23 @@ class SliderController extends Controller
     }
 
 
-    public function update(Request $request, Slider $slider)
+    public function updateById(Request $request, Slider $slider)
     {
-        //
+        if(!$request->file('slider_image')){
+
+        }
+        else {
+            @unlink(public_path('/storage/slider/'.$slider->slider_image));
+            $file = $request->file('slider_image');
+            $extension = $file->getClientOriginalExtension();
+            $slider_image ='slider_image'.rand(1,1000).'_'.date('Ymdhis').'.'.$extension;
+            Image::make($file)->resize(1400,600)->save(public_path('/storage/slider/'.$slider_image));
+            $slider_image = $slider_image;
+        }
+        $slider->title = $request->title;
+        $slider->slider_image = $slider_image;
+        $slider->update();
+        return response(['data' => new SliderResource($slider)], Response::HTTP_CREATED);
     }
 
     public function destroy(Slider $slider)
@@ -56,5 +70,17 @@ class SliderController extends Controller
         }
         $slider->delete();
         return response(['data' => 'slider Detail deleted']);
+    }
+
+    public function status(Request $request ,Slider $slider)
+    {
+        if($request->status === true){
+            $slider->status = 1 ;
+        }
+        else{
+            $slider->status = 0 ;
+        }
+        $slider->update();
+        return response(['data' => new SliderResource($slider)], Response::HTTP_CREATED);
     }
 }

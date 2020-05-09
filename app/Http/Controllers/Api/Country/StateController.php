@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Country;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Country\StateStoreRequest;
+use App\Http\Resources\Country\GetCityByIdResource;
 use App\Http\Resources\Country\GetStateByIdResource;
 use App\Http\Resources\Country\StateResource;
 use App\State;
@@ -53,6 +54,6 @@ class StateController extends Controller
 
     public function getStateById($id){
         $state = DB::table('states')->where('country_id' , $id)->get();
-        return response(['data' => $state] , Response::HTTP_CREATED);
+        return response(['data' => new GetCityByIdResource($state)] , Response::HTTP_CREATED);
     }
 }

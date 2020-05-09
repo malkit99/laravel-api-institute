@@ -19,6 +19,7 @@ class CreateDiscountsTable extends Migration
             $table->longText('description');
             $table->integer('discount');
             $table->date('last_date');
+            $table->integer('course_id');
             $table->integer('status')->default(1);
             $table->text('discount_image');
             $table->timestamps();

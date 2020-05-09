@@ -25,6 +25,7 @@ class CreateWebsitesTable extends Migration
             $table->text('linkedin')->nullable();
             $table->string('address_line_1');
             $table->string('address_line_2')->nullable();
+            $table->string('country')->nullable();
             $table->string('state')->nullable();
             $table->string('city')->nullable();
             $table->string('district')->nullable();

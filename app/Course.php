@@ -31,11 +31,14 @@ class Course extends Model
         return $this->belongsTo(CourseFee::class);
     }
 
-
-
     public function subjects()
     {
         return $this->belongsToMany('App\Subject');
+    }
+
+    public function discount()
+    {
+        return $this->hasOne('App\Discount');
     }
 
 

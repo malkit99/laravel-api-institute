@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Slider;
+namespace App\Http\Resources\Course;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SliderResource extends JsonResource
+class CourseAllNameResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,11 +15,9 @@ class SliderResource extends JsonResource
     public function toArray($request)
     {
         // return parent::toArray($request);
-        return[
-            'id' => $this->id,
-            'title' => $this->title,
-            'status' => $this->status,
-            'slider_image' => url(env('APP_URL').'/storage/slider/'.$this->slider_image),
+        return [
+            'course_id' => $this->id,
+            'course_name' => $this->course_name,
         ];
     }
 }
