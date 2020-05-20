@@ -27,7 +27,7 @@ class CourseBySlugResource extends JsonResource
             'status' => $this->status,
             'popular_course' => $this->popular_course,
             'create' => $this->created_at->format('d-M-Y'),
-            'course_image' => url('http://localhost:8000/storage/course/'.$this->course_image),
+            'course_image' => url(env('APP_URL').'/storage/course/'.$this->course_image),
             'category' => $this->course_category()->pluck('name')->first(),
             'batch' => $this->batch()->pluck('batch_size')->first(),
             'duration' => $this->duration()->pluck('duration')->first(),

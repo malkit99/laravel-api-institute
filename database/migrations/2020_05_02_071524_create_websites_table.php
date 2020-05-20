@@ -19,6 +19,7 @@ class CreateWebsitesTable extends Migration
             $table->string('email');
             $table->string('mobile')->nullable();
             $table->string('mobile_2')->nullable();
+            $table->integer('status')->default(0);
             $table->text('facebook')->nullable();
             $table->text('insta')->nullable();
             $table->text('twitter')->nullable();

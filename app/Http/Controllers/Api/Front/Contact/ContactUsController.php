@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ContactUsController extends Controller
 {
 
-    public function store(ContactStoreRequest $request , Contact $contact)
+    public function contactUs(ContactStoreRequest $request , Contact $contact)
     {
         $contact->name = $request->name;
         $contact->mobile = $request->mobile;
@@ -21,6 +21,18 @@ class ContactUsController extends Controller
         $contact->contact_type = "Contact";
         $contact->save();
         $contact->notify(new ContactFormNotification);
+        return response(['data' => 'Submit Successfully'], Response::HTTP_CREATED);
+    }
+
+    public function callBack(ContactStoreRequest $request , Contact $callBack)
+    {
+        $callBack->name = $request->name;
+        $callBack->mobile = $request->mobile;
+        $callBack->email = $request->email;
+        $callBack->course_id = $request->course_id;
+        $callBack->contact_type = "Enquery";
+        $callBack->save();
+        $callBack->notify(new ContactFormNotification);
         return response(['data' => 'Submit Successfully'], Response::HTTP_CREATED);
     }
 

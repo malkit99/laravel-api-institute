@@ -11,7 +11,6 @@ use App\Http\Resources\Course\CourseBySlugResource;
 use App\Http\Resources\Course\CourseResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Support\Arr;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
 

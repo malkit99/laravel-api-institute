@@ -25,7 +25,7 @@ class ContactStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:30|string',
-            'mobile'=>'required|unique:contacts,mobile',
+            'mobile'=>'required',
             'email' => 'required|email',
             'message'=> 'nullable|string|min:3|max:100',
         ];

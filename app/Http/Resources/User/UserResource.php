@@ -38,6 +38,7 @@ class UserResource extends JsonResource
             'mobile'    =>  $this->mobile,
             'profile_image' =>url('http://localhost:8000/storage/profile/'.$this->profile_image),
             'roles' => $this->roles->pluck('id')->first(),
+            'permissions' => $this->getAllPermissions()->pluck('name'),
         ];
     }
 }

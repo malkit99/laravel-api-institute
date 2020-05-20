@@ -20,6 +20,7 @@ class WebsiteResource extends JsonResource
             "title"             => $this->title,
             "email"             => $this->email,
             "mobile"            => $this->mobile,
+            "status"            => $this->status,
             "mobile_2"          => $this->mobile_2,
             "facebook"          => $this->facebook,
             "insta"             => $this->insta,

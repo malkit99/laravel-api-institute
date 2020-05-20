@@ -1,14 +1,13 @@
 <?php
 
-
+use App\Http\Resources\User\UserResource;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-
-
-
-
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    $user = $request->user() ;
+    return response(['data' => new UserResource($user)]);
+});
 Route::group(['middleware' => 'auth:sanctum'] , function(){
-        Route::get('/user','Api\User\UserController@user');
         Route::apiResource('/permissions','Api\Role\PermissionController');
         Route::apiResource('/roles','Api\Role\RoleController');
         Route::get('/allroles','Api\Role\AllRolesController@index');
@@ -51,6 +50,7 @@ Route::group(['middleware' => 'auth:sanctum'] , function(){
         Route::post('/service/update/{service}' , 'Api\Service\ServiceController@updateById');
         Route::post('/service/status/{service}' , 'Api\Service\ServiceController@status');
         Route::apiResource('/website' , 'Api\Website\WebsiteController');
+        Route::post('/website/status/{website}' , 'Api\Website\WebsiteController@status');
         Route::apiResource('/discount' , 'Api\Discount\DiscountController');
         Route::post('/discount/update/{discount}' , 'Api\Discount\DiscountController@updateById');
         Route::post('/discount/status/{discount}' , 'Api\Discount\DiscountController@status');
@@ -60,16 +60,40 @@ Route::group(['middleware' => 'auth:sanctum'] , function(){
         Route::apiResource('/country' , 'Api\Country\CountryController');
         Route::apiResource('/state' , 'Api\Country\StateController');
         Route::apiResource('/city' , 'Api\Country\CityController');
+        Route::apiResource('/facility' , 'Api\Facility\FacilityController');
+        Route::post('/facility/status/{facility}' , 'Api\Facility\FacilityController@status');
+        Route::post('/facility/update/{facility}' , 'Api\Facility\FacilityController@updateById');
         Route::get('/city/city/{id}' , 'Api\Country\CityController@getCityById');
         Route::get('/state/state/{id}' , 'Api\Country\StateController@getStateById');
         Route::post('/import-excel' , 'Api\Country\ImportCountryController@importCountry');
         Route::post('/state-excel' , 'Api\Country\ImportStateController@importState');
         Route::post('/city-excel' , 'Api\Country\ImportCityController@importCity');
-});
+    });
+
+    Route::post('/forgot-password' , 'Api\Auth\ForgotPasswordController@sendResetLinkEmail')->name('api.forgot.password');
+    Route::post('/reset-password' , 'Api\Auth\ResetPasswordController@reset')->name('api.password.reset');
+    Route::post('/login','Api\Auth\LoginController@login');
+    Route::post('/logout','Api\Auth\LoginController@logout');
+    Route::post('/sanctum/token' , 'GenarateToken@token');
+    Route::post('/contact-us' , 'Api\Front\Contact\ContactUsController@contactUs');
+    Route::post('/call-back' , 'Api\Front\Contact\ContactUsController@callBack');
+    Route::post('/register-discount' , 'Api\Front\Contact\RegisterDiscountController@store');
+    Route::apiResource('/website-detail' , 'Api\Front\Website\WebsiteDetailController')->only(['index']);
+    Route::apiResource('/slider-image' , 'Api\Front\Slider\SliderImageController')->only(['index']);
+    Route::apiResource('/our-service' , 'Api\Front\Service\OurServiceController')->only(['index']);
+    Route::apiResource('/our-testimonial' , 'Api\Front\OurTestimonialController')->only(['index']);
+    Route::apiResource('/our-course' , 'Api\Front\OurCourseController')->only(['index']);
+    Route::apiResource('/our-event' , 'Api\Front\OurEventController')->only(['index']);
+    Route::apiResource('/our-authorization' , 'Api\Front\OurAuthorizationController')->only(['index']);
+    Route::apiResource('/our-team' , 'Api\Front\OurTeamController')->only(['index']);
+    Route::apiResource('/our-category' , 'Api\Front\OurCategoryController')->only(['index']);
+    Route::apiResource('/our-facility' , 'Api\Front\OurFacilityController')->only(['index']);
+    Route::apiResource('/our-discount' , 'Api\Front\OurDiscountController')->only(['index']);
+    Route::get('/course-name' , 'Api\Front\CourseNameController@courseName');
+    Route::get('/course-discount' , 'Api\Front\CourseNameController@courseDiscountName');
+    Route::get('/category/course-slug/{category:slug}' , 'Api\Front\CourseByCategorySlugController@courseBySlug');
+    Route::get('/course/slug/{course:slug}' , 'Api\Front\CourseByCourseSlugController@courseByCourseSlug');
+    Route::get('/subject/slug/{subject:slug}' , 'Api\Front\CourseContentBySlugController@courseContentBySlug');
+    Route::get('/our-job' , 'Api\Front\OurJobController@jobOpportunity');
 
 
-Route::post('/forgot-password' , 'Api\Auth\ForgotPasswordController@sendResetLinkEmail')->name('api.forgot.password');
-Route::post('/reset-password' , 'Api\Auth\ResetPasswordController@reset')->name('api.password.reset');
-Route::apiResource('/login','Api\Auth\LoginController');
-Route::post('/sanctum/token' , 'GenarateToken@token');
-Route::post('/contact-us' , 'Api\Front\Contact\ContactUsController@store');

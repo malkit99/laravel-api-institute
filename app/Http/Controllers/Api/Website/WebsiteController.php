@@ -12,11 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WebsiteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Website $website)
     {
         $website = $website->all();
@@ -59,13 +55,6 @@ class WebsiteController extends Controller
     }
 
 
-
-
-    public function update(Request $request, Website $website)
-    {
-        //
-    }
-
     public function destroy(Website $website)
     {
         if($website->logo){
@@ -73,5 +62,17 @@ class WebsiteController extends Controller
         }
         $website->delete();
         return response(['data' => 'Website Detail deleted']);
+    }
+
+    public function status(Request $request ,Website $website)
+    {
+        if($request->status === true){
+            $website->status = 1 ;
+        }
+        else{
+            $website->status = 0 ;
+        }
+        $website->update();
+        return response(['data' => new WebsiteResource($website)], Response::HTTP_CREATED);
     }
 }

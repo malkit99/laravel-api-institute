@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\User\UserResource as UserUserResource;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -15,7 +16,7 @@ class UserController extends Controller
     }
 
     public function user(Request $request){
-        $user = $request->user();
-        return new UserUserResource($user);
+
+        return new UserResource(['data' => new UserResource($user)], Response::HTTP_CREATED);
     }
 }
