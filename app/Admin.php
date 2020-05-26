@@ -2,13 +2,13 @@
 
 namespace App;
 
-use App\Notifications\ResetPasswordNotification;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+
+class Admin extends Authenticatable
 {
     use HasRoles , HasApiTokens , Notifiable ;
 
@@ -18,10 +18,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','mobile','profile_image'
+        'name', 'email', 'password'
     ];
 
-    protected $guard_name = 'sanctum';
+    protected $guard = 'admin';
 
     /**
      * The attributes that should be hidden for arrays.
@@ -40,14 +40,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function categories()
-    {
-        return $this->belongsToMany(CourseCategory::class);
-    }
-
-    public function sendPasswordResetNotification($token)
-    {
-        $this->notify(new ResetPasswordNotification($token));
-    }
 }

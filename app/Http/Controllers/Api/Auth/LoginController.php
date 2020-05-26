@@ -8,7 +8,6 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Response;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {

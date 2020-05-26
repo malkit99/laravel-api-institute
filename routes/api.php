@@ -3,10 +3,24 @@
 use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     $user = $request->user() ;
     return response(['data' => new UserResource($user)]);
 });
+
+Route::middleware('auth:admin')->get('/admin/user', function (Request $request) {
+    $user = Auth::user();
+    return response(['data' => new UserResource($user)]);
+});
+
+Route::middleware('auth:student')->get('/student/user', function (Request $request) {
+    $user = Auth::user();
+    return response(['data' => new UserResource($user)]);
+});
+
+
 Route::group(['middleware' => 'auth:sanctum'] , function(){
         Route::apiResource('/permissions','Api\Role\PermissionController');
         Route::apiResource('/roles','Api\Role\RoleController');
@@ -70,6 +84,7 @@ Route::group(['middleware' => 'auth:sanctum'] , function(){
         Route::post('/city-excel' , 'Api\Country\ImportCityController@importCity');
     });
 
+
     Route::post('/forgot-password' , 'Api\Auth\ForgotPasswordController@sendResetLinkEmail')->name('api.forgot.password');
     Route::post('/reset-password' , 'Api\Auth\ResetPasswordController@reset')->name('api.password.reset');
     Route::post('/login','Api\Auth\LoginController@login');
@@ -95,5 +110,13 @@ Route::group(['middleware' => 'auth:sanctum'] , function(){
     Route::get('/course/slug/{course:slug}' , 'Api\Front\CourseByCourseSlugController@courseByCourseSlug');
     Route::get('/subject/slug/{subject:slug}' , 'Api\Front\CourseContentBySlugController@courseContentBySlug');
     Route::get('/our-job' , 'Api\Front\OurJobController@jobOpportunity');
+
+
+    Route::post('/admin/login','Api\Auth\AdminLoginController@login');
+    Route::post('/admin/logout','Api\Auth\AdminLoginController@logout');
+
+
+    Route::post('/student/login','Api\Auth\StudentLoginController@login');
+    Route::post('/student/logout','Api\Auth\StudentLoginController@logout');
 
 
